@@ -1,0 +1,22 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <a class="navbar-brand" href="#/choosen">{{storename()}}</a>
+    <div class="navbar-right">
+        <a class="btn btn-default navbar-btn" ng-click="logout()">注销</a>
+    </div>
+</nav>
+
+<div class="page-header">
+  <h1>Vdingtong服装订货会<small>测试版</small> 
+  </h1>
+
+</div>
+
+  <accordion close-others="oneAtATime">
+    <accordion-group is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" ng-repeat="news in news_list" >
+      <accordion-heading>
+        {{news.news_title}}
+          <span class="pull-right">{{news.updated_at}}</span>
+      </accordion-heading>
+      <p ng-bind-html="news.news_content"></p>
+    </accordion-group>
+  </accordion>

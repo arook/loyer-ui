@@ -1,0 +1,73 @@
+<div class="ui tiny indicating progress segment" id="loadingPBar" ng-show="isPLoading">
+  <div class="bar">
+  </div>
+  <div class="label">正在下载预选图片包，请稍候</div>
+</div>
+
+<div class="ui tiny indicating progress segment" id="loadingOBar" ng-show="isOLoading">
+  <div class="bar">
+  </div>
+  <div class="label">正在下载订货图片包，请稍候</div>
+</div>
+
+<div class="ui tiny indicating progress segment" id="loadingCBar" ng-show="isCLoading">
+  <div class="bar">
+  </div>
+  <div class="label">正在下载搭配图片包，请稍候</div>
+</div>
+
+<div class="ui tiny indicating progress segment" id="loadingRBar" ng-show="isRLoading">
+  <div class="bar">
+  </div>
+  <div class="label">正在下载补货图片包，请稍候</div>
+</div>
+
+<div class="ui info icon message">
+  <i class="info icon"></i>
+  <div class="content">
+    <div class="header">友情提示</div>
+    <p>
+      为了达到最好的使用效果，我们建议您在使用订货之前，先选择加载对应的图片包
+    </p>
+  </div>
+</div>
+
+<div class="ui segments small">
+  <div class="ui segment">
+    <div class="fluid ui buttons {{openedCount}}">
+      <a href="#/preselection" class="ui labeled icon button green" ng-show="config.if_staring_online">
+        <i class="star icon"></i>预选系统
+      </a>
+
+      <a href="#/collection" class="ui labeled icon button pink" ng-show="config.if_ordering_online">
+        <i class="list icon"></i>订货系统
+      </a>
+
+      <a href="#/repl" class="ui labeled icon button blue" ng-show="config.if_replenishing_online">
+        <i class="database icon"></i>
+        补货系统
+      </a>
+    </div>
+    
+  </div>
+  <div class="ui segment">
+    <div class="fluid ui buttons {{openedCount}}">
+      <a class="ui button green" ng-click="preloadA()">
+        加载预选图片
+      </a>
+
+      <a class="ui button pink" ng-click="preloadB()">
+        加载订货图片
+      </a>
+
+      <a class="ui button blue" ng-click="preloadC()">
+        加载补货图片
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<div class="ui segment">
+  <img class="ui centered image" src="http://120.25.121.245:8889/files/dinghuotongzhi.jpg">
+</div>

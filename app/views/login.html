@@ -1,0 +1,26 @@
+
+<p></p><p></p><p></p>
+
+<form class="ui form segment small" name="loginForm">
+  <h4 class="ui dividing header">系统登录</h4>
+  <div class="field" ng-class="{'error': loginForm.login.$invalid}">
+    <label>用户名</label>
+    <div class="ui input">
+      <input type="text" name="login" required ng-model="input.login" placeholder="请输入用户名">
+    </div>
+  </div>
+  <div class="field" ng-class="{'error': loginForm.code.$invalid}">
+    <label>授权码</label>
+    <div class="ui input">
+      <input type="password" name="code" required ng-model="input.code" placeholder="请输入授权码">
+    </div>
+  </div>
+  <div class="field" ng-class="{'error': loginForm.password.$invalid}">
+    <label>密码</label>
+    <div class="ui input">
+      <input type="password" name="password" required ng-model="input.password" placeholder="请输入授权码">
+    </div>
+  </div>
+  <button class="ui button teal fluid" type="submit" ng-disabled="loginForm.$invalid" ng-click="loginToP()">登陆系统</button>
+
+</form>

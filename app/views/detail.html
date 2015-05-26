@@ -1,0 +1,120 @@
+
+<table class="ui table unstackable small striped celled">
+  <tbody>
+    <tr>
+      <td class="active">货号</td>
+      <td>{{item.number}}</td>
+      <td class="active">品牌</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="active">年份</td>
+      <td></td>
+      <td class="active">季节</td>
+      <td>{{item.sex}}</td>
+    </tr>
+    <tr>
+      <td class="active">类别</td>
+      <td>{{item.category}}</td>
+      <td class="active">系列</td>
+      <td>{{item.catena}}</td>
+    </tr>
+    <tr>
+      <td class="active">面料</td>
+      <td>{{item.description_fabric}}</td>
+      <td class="active">里料</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="active">上市日期</td>
+      <td>{{item.topdate}}</td>
+      <td class="active">吊牌价</td>
+      <td>{{item.price | currency:'￥'}}</td>
+    </tr>
+    <tr>
+      <td class="active">货品描述</td>
+      <td colspan="3">{{item.description_style}}</td>
+    </tr>
+    <tr>
+      <td class="active">{{item.name}}</td>
+      <td colspan="3">
+        <table class="ui table unstackable small striped celled">
+          <tbody>
+            <tr ng-repeat="color in item.colors">
+              <td>{{color.color.name}}</td>
+              <td>
+                <div rating ng-model="item.avg_stars[color.id]" ng-init="gid=color.id" readonly></div> (<b>{{item.avg_stars[color.id] | number:1}}分</b>)
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<form class="ui form" name="orderForm">
+  <table class="ui table unstackable small striped celled">
+    <thead>
+      <tr>
+        <th>商品名</th>
+        <th>颜色名称</th>
+        <th ng-repeat="s in item.sizes">{{s.size.name}}</th>
+        <th>批量下单</th>
+        <th>数量</th>
+        <th>吊牌价</th>
+        <th>金额</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="c in item.colors">
+        <td>{{item.name}}</td>
+        <td>{{c.color.name}}</td>
+        <td ng-repeat="s in item.sizes" width="60">
+          <div class="ui input mini">
+            <input type="text" ng-model="order[c.color.code][s.size.value]" valid-number />
+          </div>
+        </td>
+        <td>
+          <div class="3 fluid ui mini teal buttons ">
+            <div class="ui button" ng-click="change_to(1, c.color.code)">1</div>
+            <div class="ui button" ng-click="change_to(2, c.color.code)">2</div>
+            <div class="ui button" ng-click="change_to(3, c.color.code)">3</div>
+          </div>
+        </td>
+        <td>{{sumcolor(c.color.code)}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.price * sumcolor(c.color.code)}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>合计</th>
+        <th></th>
+        <th ng-repeat="s in item.sizes">
+          {{sumsize(s.size.value)}}
+        </th>
+        <th></th>
+        <th>{{sumall()}}</th>
+        <th>{{item.price | currency: '￥'}}</th>
+        <th>{{item.price * sumall()}}</th>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+<div class="ui segment right aligned">
+  <div class="ui buttons">
+    <div class="ui button" ng-click="back()">返回</div>
+    <button ng-click="ok()" class="ui button positive" ng-disabled="orderForm.$invalid">保存订单</button>
+    <div class="ui button negative" ng-click="change_to(0)">清空</div>
+  </div>
+</div>
+
+<div class="ui grid">
+  <div class="sixteen wide column" ng-repeat="image in item.images">
+    <div class="ui fluid rounded image">
+      <img src="{{image.url}}" />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vdingtong服装订货软件</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/semantic/dist/semantic.css" />
+    <link rel="stylesheet" href="bower_components/slick.js/slick/slick.css" />
+    <link rel="stylesheet" href="bower_components/slick.js/slick/slick-theme.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+
+    <!-- endbuild -->
+  </head>
+  <body ng-app="loyerApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    
+    <div class="ui menu grid" ng-cloak ng-controller="VdtDefaultCtrl" ng-show="isLogin()">
+      <a href="#/choosen" class="item" ng-class="{active: routeIs('/choosen')}">
+        <i class="home icon"></i>LOYER
+      </a>
+
+      <a class="computer tablet only row item link" href="#/preselection" ng-class="{active: routeIs('/preselection')}" ng-show="config.if_staring_online">
+          <i class="star icon"></i>预选
+      </a>
+      <a class="computer tablet only row item link" href="#/main" ng-class="{active: routeIs('/main') || routeIs('/collection')}" ng-show="config.if_ordering_online">
+          <i class="list icon"></i>订货
+      </a>
+      <a class="computer tablet only row item link" href="#/repl" ng-class="{active: routeIs('/repl')}" ng-show="config.if_replenishing_online">
+          <i class="database icon"></i>补货
+      </a>
+
+      <div class="mobile only row ui dropdown item">
+        <i class="list icon"></i>
+        菜单
+        <div class="menu">
+          <a class="item" href="#/preselection" ng-class="{active: routeIs('/preselection')}" ng-show="config.if_staring_online"><i class="star icon"></i>预选</a>
+          <a class="item" href="#/main" ng-class="{active: routeIs('/main') || routeIs('/collection')}" ng-show="config.if_ordering_online"><i class="list icon"></i>订货</a>
+          <a class="item" href="#/repl" ng-class="{active: routeIs('/repl')}" ng-show="config.if_replenishing_online"><i class="database icon"></i>补货</a>
+        </div>
+      </div>
+
+
+      <div class="computer tablet only row header item">
+          欢迎您, {{storename()}}
+      </div>
+
+      <div class="right menu">
+        <a class="item link" href="#/main" ng-show="routeIs('/main/order')">
+          继续订货
+        </a>
+        <a class="item link" href="#/main/order" ng-show="routeIs('/main') || routeIs('/collection')">
+          <i class="cart icon"></i>
+          购物车({{total_main()}}/{{amount_main() | currency: "￥"}})
+        </a>
+        <a class="item link" href="#/repl" ng-show="routeIs('/repl/order')">
+          继续补货
+        </a>
+        <a class="item link" href="#/repl/order" ng-show="routeIs('/repl')">
+          <i class="cart icon"></i>
+          购物车({{total_repl()}}/{{amount_repl() | currency: "￥"}})
+        </a>
+        <div class="link item">
+          <button class="ui button secondary" ng-click="logout()">注销</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Add your site or application content here -->
+    <div class="ui page grid">
+        <div class="column" ng-view=""></div>
+    </div>
+
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/react/react.js"></script>
+    <script src="bower_components/semantic/dist/semantic.js"></script>
+    <script src="bower_components/slick.js/slick/slick.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/services/authentication.js"></script>
+        <script src="scripts/services/store.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/directives/onlyDigits.js"></script>
+        <script src="scripts/services/cart.js"></script>
+        <script src="scripts/controllers/order.js"></script>
+        <script src="scripts/filters/range.js"></script>
+        <script src="scripts/filters/percent.js"></script>
+        <script src="scripts/controllers/modal.js"></script>
+        <script src="scripts/controllers/repl.js"></script>
+        <script src="scripts/services/repl.js"></script>
+        <script src="scripts/controllers/Modal1.js"></script>
+        <script src="scripts/controllers/ReplOrder.js"></script>
+        <script src="scripts/controllers/preselection.js"></script>
+        <script src="scripts/controllers/PreselectionModal.js"></script>
+        <script src="scripts/controllers/collection.js"></script>
+        <script src="scripts/controllers/Collectionmodal.js"></script>
+        <script src="scripts/directives/validNumber.js"></script>
+        <script src="scripts/controllers/choosen.js"></script>
+        <script src="scripts/controllers/news.js"></script>
+        <script src="scripts/directives/preselection.js"></script>
+        <script src="scripts/controllers/searching.js"></script>
+        <script src="scripts/directives/menuview.js"></script>
+        <script src="scripts/controllers/vdt-default.js"></script>
+        <script src="scripts/directives/rating.js"></script>
+        <script src="scripts/directives/dropdown.js"></script>
+        <script src="scripts/services/meta.js"></script>
+        <script src="scripts/services/cache.js"></script>
+        <script src="scripts/directives/vdtslick.js"></script>
+        <script src="scripts/services/preload.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

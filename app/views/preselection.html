@@ -1,0 +1,27 @@
+
+<div class="ui grid">
+  <div class="sixteen wide mobile eight wide tablet eight wide computer column" ng-repeat="g in goods">
+    <div class="ui green segment attached" >
+      <div class="ui top left attached label green">{{g.price | currency:'￥'}}</div>
+      <div class="ui  rounded image" vdt-slick items="g.images" key="url"></div>
+    </div>
+    <table class="ui table unstackable attached">
+      <thead>
+        <tr>
+          <th colspan="3">{{g.number}} {{g.name}} ({{g.price | currency:'￥'}})</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="c in g.colors">
+          <td>{{c.color.name}}</td>
+          <td>
+            <div rating ng-model="g.rating[c.id]" max="5"></div>
+          </td>
+          <td>
+            <!-- <span class="ui red tag label mini" ng-show="!g.rating[c.id]">请评分</span> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

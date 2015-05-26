@@ -1,0 +1,142 @@
+<div class="ui segments">
+  <div class="ui green segment">
+    <h4 class="ui header dividing">{{collection.number}}</h4>
+    <div class="content">{{collection.rule}}</div>
+    
+  </div>
+</div>
+
+<form class="ui form" name="orderForm"> 
+  <table class="ui table unstackable small striped celled">
+    <thead>
+      <tr>
+        <th rowspan="7">款号</th>
+        <th rowspan="7">颜色</th>
+        <th>F</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th rowspan="7">批量下单</th>
+        <th rowspan="7">总数</th>
+        <th rowspan="7">吊牌价</th>
+        <th rowspan="7">金额</th>
+      </tr>
+      <tr>
+        <th>S</th>
+        <th>M</th>
+        <th>L</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>S</th>
+        <th>M</th>
+        <th>L</th>
+        <th>XL</th>
+        <th>XXL</th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>M</th>
+        <th>L</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>25</th>
+        <th>26</th>
+        <th>27</th>
+        <th>28</th>
+        <th>29</th>
+        <th>30</th>
+      </tr>
+      <tr>
+        <th>M</th>
+        <th>L</th>
+        <th>XL</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in collection.detail">
+        <td><a href="#/main/item/{{item.product.id}}">{{item.product.name}}({{item.product.number}})</a></td>
+        <td>{{item.color.color.name}}</td>
+
+        <td width="60">
+          <div class="ui input mini">
+            <input type="text" ng-model="order[item.product.id][item.color.color.code]['S1']" valid-number ng-show="item.product.S1"/>
+          </div>
+        </td>
+        <td width="60">
+          <div class="ui input mini">
+            <input type="text" ng-model="order[item.product.id][item.color.color.code]['S2']" valid-number ng-show="item.product.S2"/>
+          </div>
+        </td>
+        <td width="60">
+          <div class="ui input mini">
+            <input type="text" ng-model="order[item.product.id][item.color.color.code]['S3']" valid-number ng-show="item.product.S3"/>
+          </div>
+        </td>
+        <td width="60">
+          <div class="ui input mini">
+            <input type="text" ng-model="order[item.product.id][item.color.color.code]['S4']" valid-number ng-show="item.product.S4"/>
+          </div>
+        </td>
+        <td width="60">
+          <div class="ui input mini">
+            <input type="text" ng-model="order[item.product.id][item.color.color.code]['S5']" valid-number ng-show="item.product.S5"/>
+          </div>
+        </td>
+        <td width="60">
+          <div class="ui input mini">
+            <input type="text" ng-model="order[item.product.id][item.color.color.code]['S6']" valid-number ng-show="item.product.S6"/>
+          </div>
+        </td>
+
+        <td>
+          <div class="3 fluid ui mini teal buttons">
+            <div class="ui button" ng-click="change_to(1, item)">1</div>
+            <div class="ui button" ng-click="change_to(2, item)">2</div>
+            <div class="ui button" ng-click="change_to(3, item)">3</div>
+          </div>
+        </td>
+
+        <td width="50">
+          {{ order[item.product.id][item.color.color.code].$qty() }}
+        </td>
+
+        <td>{{item.product.price | currency: '￥'}}</td>
+        <td>{{(order[item.product.id][item.color.color.code].$qty() * item.product.price) | currency: '￥'}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="11">合计</td>
+        <td>{{order.$amount() | currency: '￥'}}</td>
+      </tr>
+    </tfoot>
+  </table>
+</form>
+
+<div class="ui segment right aligned">
+  <div class="ui buttons">
+    <div class="ui button" ng-click="cancel()">返回</div>
+    <button ng-click="ok()" class="ui button positive" ng-disabled="orderForm.$invalid">保存订单</button>
+    <div class="ui button negative" ng-click="change_to(0)">清空</div>
+  </div>
+</div>
+
+<div class="ui grid">
+  <div class="sixteen wide column" ng-repeat="slide in slides">
+    <div class="ui fluid rounded image">
+      <img ng-src="{{slide.image}}" />
+    </div>
+  </div>
+</div>

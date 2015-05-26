@@ -1,0 +1,21 @@
+<div class="ui segments">
+
+  <div class="ui pink segment">
+    <h4 class="ui header dividing">订货</h4>
+    <div class="ui top attached pointing secondary menu compact">
+      <a class="item" href="#/main">单品订货</a>
+      <a class="item active" href="#/collection">搭配订货</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="ui grid pink segment">
+  <div class="sixteen wide mobile eight wide tablet eight wide computer column" ng-repeat="g in goods">
+    <div class="ui founded fluid image">
+      <a href="#/collection/item/{{g.id}}"><img ng-src="/front/asset/collections/{{g.id}}/1/jpg" /></a>
+      <div class="ui top right attached label pink massive" ng-show="g.oc"><i class="check icon"></i>{{g.oc}}件</div>
+      <div class="ui bottom attached mini label">{{g.number}}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<div class="modal-header">
+  <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> -->
+  <h4 class="modal-title">{{item.name}}</h4>
+
+</div>
+<div class="modal-body">
+
+  <div class="panel panel-default">
+
+    <div class="panel-body">
+
+      <div style="height: ">
+        <carousel>
+          <slide ng-repeat="slide in slides">
+            <img ng-src="{{slide.image}}" style="margin:auto">
+            <div class="carousel-caption">
+              <h4>图片 {{$index + 1}}</h4>
+            </div>
+          </slide>
+        </carousel>
+      </div>
+
+        <hr>
+
+        <table class="table table-hover table-responsive table-condensed">
+          <tbody>
+            <tr>
+              <th>货号</th>
+              <td>{{item.number}}</td>
+              <th>品牌</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>年份</th>
+              <td></td>
+              <th>季节</th>
+              <td>{{item.sex}}</td>
+            </tr>
+            <tr>
+              <th>类别</th>
+              <td>{{item.category}}</td>
+              <th>系列</th>
+              <td>{{item.catena}}</td>
+            </tr>
+            <tr>
+              <th>面料</th>
+              <td>{{item.description_fabric}}</td>
+              <th>里料</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>上市日期</th>
+              <td>{{item.topdate}}</td>
+              <th>吊牌价</th>
+              <td>{{item.price | currency:'￥'}}</td>
+            </tr>
+            <tr>
+              <th>货品描述</th>
+              <td colspan="3">{{item.description_style}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <hr>
+
+<!--         <div class="page-header">
+          <h1>请为产品打分 
+          <rating ng-model="item.star" max="5" readonly="isReadonly"></rating>
+        </div> -->
+
+        <h3>请为{{item.name}}({{item.number}})打分 </h3>
+
+        <table class="table table-hover table-responsive table-condensed">
+        <tbody>
+          <tr ng-repeat="color in item.colors">
+            <td>{{color.color.name}}</td>
+            <td>
+              <rating ng-model="item.stars[color.id]" max="5" readonly="isReadonly"></rating>
+              <!--<a href="javascript:;" class="glyphicon glyphicon-thumbs-up" ng-click="like(color.id)"></a>-->
+            </td>
+          </tr>
+        </tbody>
+        </table>
+
+      </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" ng-click="cancel()" class="btn btn-default" data-dismiss="modal">返回</button>
+  <button type="button" ng-click="ok()" class="btn btn-primary" ng-disabled="orderForm.$invalid">确认打分</button>
+</div>

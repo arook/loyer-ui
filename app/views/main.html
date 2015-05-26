@@ -1,0 +1,42 @@
+<div class="ui segments">
+  
+  <div class="ui pink segment">
+    <h4 class="ui header dividing">订货</h4>
+    <div class="ui top attached pointing secondary menu compact">
+      <a class="item active" href="#/main">单品订货</a>
+      <a class="item" href="#/collection">搭配订货</a>
+    </div>
+  </div>
+
+  <div class="ui small form segment">
+    <div class="four fields">
+      <div class="field">
+        <div class="ui input small">
+          <input ng-model="filter.number" type="text" name="number" id="number"  required placeholder="产品编号">
+        </div>
+      </div>
+
+      <div drop-down class="field" ng-model="filter.period" options="periods" label="sex" title="-所有波次-" size="small"></div>
+
+      <div drop-down class="field" ng-model="filter.category" options="categories" label="classified" title="-所有分类-" size="small"></div>
+
+      <div drop-down class="field" ng-model="filter.series" options="series" label="catena" title="-所有系列-" size="small"></div>
+
+
+    </div>
+  </div>
+
+</div>
+
+<div class="ui grid pink segment">
+  <div class="sixteen wide mobile eight wide tablet four wide computer column" ng-repeat="g in goods">
+    <div class="ui rounded image fluid">
+      <a href="#/main/item/{{g.id}}"><img ng-src="http://120.25.121.245:8889/Files/{{g.number}}.jpg" /></a>
+      <div class="ui top left attached label pink mini">{{g.price | currency:'￥'}}</div>
+      <div class="ui top right attached label red mini" ng-show="g.oc"><i class="check icon"></i>{{g.oc}}件</div>
+      <div class="ui bottom attached mini label">{{g.number}}</div>
+    </div>
+  </div>
+</div>
+
+<button ng-click="loadMore()" type="button" class="ui button fluid">加载更多。。。</button>

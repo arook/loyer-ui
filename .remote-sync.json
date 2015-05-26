@@ -1,0 +1,13 @@
+{
+  "uploadOnSave": false,
+  "hostname": "192.168.1.99",
+  "port": "22",
+  "target": "/var/www/html/ui",
+  "ignore": [
+    ".git/**"
+  ],
+  "username": "root",
+  "keyfile": "/Users/kky979899/.ssh/id_rsa",
+  "passphrase": "wwily2321",
+  "transport": "scp"
+}

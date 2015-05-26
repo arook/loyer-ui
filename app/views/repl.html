@@ -1,0 +1,59 @@
+<form class="ui small form blue segment" name="searchForm">
+  <h4 class="ui dividing header">补货</h4>
+  <div class="three fields">
+
+    <div class="field" ng-class="{error: searchForm.number.$invalid}">
+      <div class="ui input small">
+        <input name="number" ng-model="filter.number" type="text" placeholder="产品编号">
+      </div>
+    </div>
+
+    <div drop-down class="field" ng-model="filter.category" options="categories" label="classified" title="-所有分类-" size="small"></div>
+
+    <div drop-down class="field" ng-model="filter.series" options="series" label="catena" title="-所有系列-" size="small"></div>
+
+  </div>
+
+  <button type="button" class="ui button mini" ng-class="{'teal': show_img}" ng-model="show_img" ng-click="show_img=!show_img">显示图片</button>
+
+</form>
+
+<div class="ui grid blue segment" ng-show="show_img && goods">
+  <div class="sixteen wide mobile eight wide tablet four wide computer column" ng-repeat="g in goods">
+    <div class="ui fluid image" ng-show="show_img && goods">
+      <a href="#/repl/item/{{g.id}}"><img ng-src="http://120.25.121.245:8889/Files/{{g.number}}.jpg" /></a>
+      <div class="ui top left attached label green mini">{{g.price | currency:'￥'}}</div>
+      <div class="ui top right attached label red mini" ng-show="g.oc"><i class="check icon"></i>{{g.oc}}件</div>
+      <div class="ui bottom attached mini label"><div rating ng-model="g.star" readonly></div></div>
+    </div>
+  </div>
+</div>
+
+<table class="ui table small unstackable" ng-show="!show_img && goods">
+  <thead>
+    <tr>
+      <th>款号</th>
+      <th>名称</th>
+      <th>吊牌价</th>
+      <th>已定数量</th>
+      <th>推荐等级</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="g in goods" ng-class="{'success': g.oc}">
+      <td>{{g.number}}</td>
+      <td>{{g.name}}</td>
+      <td>{{g.price | currency:'￥'}}</td>
+      <td>{{g.oc}}</td>
+      <td>
+        <div rating ng-model="g.star" readonly></div>
+      </td>
+      <td>
+        <a href="#/repl/item/{{g.id}}">查看</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button ng-click="loadMore()" type="button" class="ui button fluid" ng-class="{loading: ifLoading}">加载更多。。。</button>

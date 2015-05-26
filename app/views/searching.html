@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h1>货件查询系统<small></small></h1>
+</div>
+<div class="row">
+  <form ng-submit="search()">
+  <div class="col col-xs-6">
+      <input type="text" class="form-control" ng-model="kw" placeholder="请输入货号">
+  </div>
+  <div class="col col-xs-6">
+    <input type="submit" value="查询" class="btn btn-success">
+  </div>
+  </form>
+</div>
+
+<hr ng-show="product" />
+<div class="row" ng-show="product">
+  <div class="col col-xs-12">
+    <table class="table table-striped table-bordered table-condensed">
+      <tr>
+        <th>货号</th>
+        <td>{{product.number}}</td>
+        <th>名称</th>
+        <td>{{product.name}}</td>
+      </tr>
+      <tr>
+        <th>分类</th>
+        <td>{{product.classified.classified}}</td>
+        <th>波段</th>
+        <td>{{product.catena}}</td>
+      </tr>
+      <tr>
+        <th>颜色</th>
+        <td colspan="3">
+          <span ng-repeat="color in product.colors">{{color.color.name}},</span>
+        </td>
+      </tr>
+      <tr>
+        <th>尺码</th>
+        <td colspan="3">
+          <span ng-repeat="size in product.sizes">{{size.size.name}},</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

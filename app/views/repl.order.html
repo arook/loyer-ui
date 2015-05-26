@@ -1,0 +1,245 @@
+
+<div class="ui segments">
+
+  <div class="ui green segment">
+    <h4 class="ui header dividing">订单编号 {{order.id}} 【补货单】</h4>
+    <div class="ui top attached pointing secondary menu compact">
+      <a class="item" ng-click="btn_summary()" ng-class="{active: show_summary}">订单概览</a>
+      <a class="item" ng-click="btn_tops()" ng-class="{active: show_tops}">订单分析</a>
+      <a class="item" ng-click="btn_detail()" ng-class="{active: show_detail}">订单明细</a>
+    </div>
+
+    <table class="ui table small unstackable structured striped celled" ng-show="show_summary">
+      <thead>
+        <tr>
+          <th>大类</th>
+          <th>总款数</th>
+          <th>已订款数</th>
+          <th>款数占比</th>
+          <th>款色数</th>
+          <th>已订款色</th>
+          <th>款色占比</th>
+          <th>件数</th>
+          <th>金额</th>
+          <th>金额占比</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="g in summary">
+          <td>{{g.name}}</td>
+          <td>{{g.styles}}</td>
+          <td>{{g.styles_ordered}}</td>
+          <td>{{g.styles_ordered / g.styles | percent:2}}</td>
+          <td>{{g.colors}}</td>
+          <td>{{g.colors_ordered}}</td>
+          <td>{{g.colors_ordered / g.colors | percent:2}}</td>
+          <td>{{g.qty}}</td>
+          <td>{{g.amount | currency: '￥'}}</td>
+          <td>{{g.amount / summary.$sum('amount') | percent:2}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>合计</th>
+          <th>{{summary.$sum('styles')}}</th>
+          <th>{{summary.$sum('styles_ordered')}}</th>
+          <th>{{summary.$sum('styles_ordered') / summary.$sum('styles') | percent:2}}</th>
+          <th>{{summary.$sum('colors')}}</th>
+          <th>{{summary.$sum('colors_ordered')}}</th>
+          <th>{{summary.$sum('colors_ordered') / summary.$sum('colors') | percent:2}}</th>
+          <th>{{summary.$sum('qty')}}</th>
+          <th>{{summary.$sum('amount') | currency: '￥'}}</th>
+          <th></th>
+        </tr>
+      </tfoot>
+    </table>
+
+
+
+    <table class="ui table small unstackable structured striped celled" ng-show="show_tops">
+      <thead>
+        <tr>
+          <th colspan="7">
+            <div class="ui buttons tiny">
+              <button type="button" class="ui button" ng-click="change_tops_type('category')" ng-class="{'teal': tops_type == 'category'}">按分类查看</button>
+              <div class="or"></div>
+              <button type="button" class="ui button" ng-click="change_tops_type('serials')" ng-class="{'teal': tops_type == 'serials'}">按系列查看</button>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>总排名</th>
+          <th ng-show="tops_type=='category'">类别</th>
+          <th ng-show="tops_type=='serials'">系列</th>
+          <th>我的订单（件）</th>
+          <th>金额（元）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="g in tops">
+          <td>{{$index + 1}}</td>
+          <td ng-show="tops_type=='category'">
+            <a href="" ng-init="show.$index = true" ng-click="show.$index = !show.$index">{{g.classified}}</a>
+            <div collapse="show.$index">
+              <table class="ui table small unstackable structured striped celled">
+                <thead>
+                  <tr>
+                    <th>款号</th>
+                    <th>单价（元）</th>
+                    <th>颜色</th>
+                    <th>尺寸</th>
+                    <th>数量</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="s in g.subs">
+                    <td><a href="#/repl/item/{{s.gid}}">{{s.number}}</a></td>
+                    <td>{{s.price | currency: '￥'}}</td>
+                    <td>{{s.color}}</td>
+                    <td>{{s.size}}</td>
+                    <td>{{s.qty}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+          <td ng-show="tops_type=='serials'">
+            <a href="" ng-init="show.$index = true" ng-click="show.$index = !show.$index">{{g.series}}</a>
+            <div collapse="show.$index">
+              <table class="ui table small unstackable structured striped celled">
+                <thead>
+                  <tr>
+                    <th>款号</th>
+                    <th>单价（元）</th>
+                    <th>颜色</th>
+                    <th>尺寸</th>
+                    <th>数量</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="s in g.subs">
+                    <td><a href="#/repl/item/{{s.gid}}">{{s.number}}</a></td>
+                    <td>{{s.price | currency: '￥'}}</td>
+                    <td>{{s.color}}</td>
+                    <td>{{s.size}}</td>
+                    <td>{{s.qty}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </td>
+          <td>{{g.qty}}</td>
+          <td>{{g.total | currency: '￥'}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="2"> 合计 </th>
+          <th>{{tops.$sum('qty')}}</th>
+          <th>{{tops.$sum('total') | currency: '￥'}}</th>
+        </tr>
+      </tfoot>
+    </table>
+
+    <table class="ui table small unstackable structured striped celled" ng-show="show_detail">
+      <thead>
+        <tr>
+          <th rowspan="7">总排名</th>
+          <th rowspan="7">款号</th>
+          <th rowspan="7">单价（元）</th>
+          <th rowspan="7">颜色</th>
+          <th>F</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th rowspan="7">小计</th>
+          <th rowspan="7">金额（元）</th>
+        </tr>
+        <tr>
+          <th>S</th>
+          <th>M</th>
+          <th>L</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>S</th>
+          <th>M</th>
+          <th>L</th>
+          <th>XL</th>
+          <th>XXL</th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>M</th>
+          <th>L</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th>25</th>
+          <th>26</th>
+          <th>27</th>
+          <th>28</th>
+          <th>29</th>
+          <th>30</th>
+        </tr>
+        <tr>
+          <th>M</th>
+          <th>L</th>
+          <th>XL</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody ng-repeat="g in details" style="border-bottom: 1px solid #d4d4d5">
+        <tr ng-repeat="c in g.colors">
+          <td rowspan="{{g.c_colors}}" ng-show="$first">{{$index + 1}}</td>
+          <td rowspan="{{g.c_colors}}" ng-show="$first"><a href="#/repl/item/{{g.id}}">{{g.number}}</a></td>
+          <td rowspan="{{g.c_colors}}" ng-show="$first">{{g.price | currency: '￥'}}</td>
+          <td>{{c.name}}</td>
+          <td>{{c.sizes.S1 || 0}}</td>
+          <td>{{c.sizes.S2 || 0}}</td>
+          <td>{{c.sizes.S3 || 0}}</td>
+          <td>{{c.sizes.S4 || 0}}</td>
+          <td>{{c.sizes.S5 || 0}}</td>
+          <td>{{c.sizes.S6 || 0}}</td>
+          <td>{{(c.sizes.S1 || 0) + (c.sizes.S2 || 0) + (c.sizes.S3 || 0) + (c.sizes.S4 || 0) + (c.sizes.S5 || 0) + (c.sizes.S6 || 0)}}</td>
+          <td>{{(c.sizes.S1 || 0 + c.sizes.S2 || 0 + c.sizes.S3 || 0 + c.sizes.S4 || 0 + c.sizes.S5 || 0 + c.sizes.S6 || 0) * g.price | currency: '￥'}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>合计</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>{{details.$size('S1') || 0}}</th>
+          <th>{{details.$size('S2') || 0}}</th>
+          <th>{{details.$size('S3') || 0}}</th>
+          <th>{{details.$size('S4') || 0}}</th>
+          <th>{{details.$size('S5') || 0}}</th>
+          <th>{{details.$size('S6') || 0}}</th>
+          <th>{{details.$size('S1') + details.$size('S2') + details.$size('S3') + details.$size('S4') + details.$size('S5') + details.$size('S6') || 0}}</th>
+          <th>{{amount() | currency: '￥'}}</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="ui secondary right aligned segment">
+    <div class="ui buttons">
+      <button type="button" class="ui button positive" ng-click="btn_submit()">提交订单</button>
+      <div class="or"></div>
+      <button type="button" class="ui button negative" ng-click="empty()">清空购物车</button>
+    </div>
+  </div>
+
+</div>
